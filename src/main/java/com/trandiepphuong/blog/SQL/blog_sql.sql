@@ -1,17 +1,9 @@
 drop database if exists blog;
 create database blog;
 use blog;
-
-CREATE TABLE role
-(
-	id int NOT NULL AUTO_INCREMENT,
-    role VARCHAR(50),
-    PRIMARY KEY (id)
-);
 CREATE TABLE user
 (
     id BIGINT NOT NULL AUTO_INCREMENT,
-    role_id int NOT NULL,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
     mobile VARCHAR(15),
@@ -19,9 +11,17 @@ CREATE TABLE user
     password VARCHAR(32),
     intro TINYTEXT NULL DEFAULT NULL,
     UNIQUE INDEX `uq_email` (email ASC),
-    PRIMARY KEY (id),
-    CONSTRAINT `fk_user_role` FOREIGN KEY (role_id) REFERENCES role(id)
+    PRIMARY KEY (id)
 );
+CREATE TABLE role
+(
+    id int NOT NULL AUTO_INCREMENT,
+    role VARCHAR(50),
+    user_id BIGINT NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT `fk_role_user` FOREIGN KEY (user_id) REFERENCES user(id)
+);
+
 
 
 CREATE TABLE category
@@ -34,6 +34,7 @@ CREATE TABLE category
 CREATE TABLE post
 (
     id BIGINT NOT NULL AUTO_INCREMENT,
+    is_active BIT,
     author_id BIGINT NOT NULL,
     category_id BIGINT NOT NULL,
     title VARCHAR(75) NOT NULL,
@@ -50,8 +51,8 @@ CREATE TABLE post
 CREATE TABLE tag
 (
     id BIGINT NOT NULL AUTO_INCREMENT,
-	name TEXT NULL DEFAULT NULL,
-	PRIMARY KEY (id)
+    name TEXT NULL DEFAULT NULL,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE post_tag
@@ -62,14 +63,15 @@ CREATE TABLE post_tag
     CONSTRAINT `fk_pt_post` FOREIGN KEY (post_id) REFERENCES post (id) ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT `fk_pt_tag` FOREIGN KEY (tag_id) REFERENCES tag (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
-insert into role (role) values ('admin'), ('author');
-insert into user (role_id, first_name, last_name, mobile, email, password, intro) values
-(2,'Phương','Trần','0354892727','phuongtran@novahub.vn','123456789','Intro của Phương'),
-(2, 'Triết','Trần','0382499311','triettran@novahub.vn','987654321','Intro của Triết'),
-(1, 'Admin', 'Admin', '0354892727','dphuong15032000@gmail.com','123456789','Intro của Admin');
+
+insert into user ( first_name, last_name, mobile, email, password, intro) values
+('Phương','Trần','0354892727','phuongtran@novahub.vn','123456789','Intro của Phương'),
+('Triết','Trần','0382499311','triettran@novahub.vn','987654321','Intro của Triết'),
+('Admin', 'Admin', '0354892727','dphuong15032000@gmail.com','123456789','Intro của Admin');
+insert into role (role, user_id) values ('admin',3), ('author',1), ('author',2);
 
 insert into category (name) values ('Xã hội'),('Thể thao'),('Công nghệ');
-insert into post (author_id, category_id, title, created_at, updated_at, content) values 
+insert into post (author_id, category_id, title, created_at, updated_at, content) values
 (1, 1, 'Sáng 8/7: TP Hồ Chí Minh và Bình Dương có 314 ca mắc COVID-19', '2021/07/08 05:58', '2021/07/08 05:58', 'Suckhoedoisong.vn - Bản tin dịch COVID-19 sáng 8/7 của Bộ Y tế cho biết có 314 ca mắc tại 2 địa phương là TP Hồ Chí Minh - 234 ca và Bình Dương- 80 ca. Đến nay, Việt Nam ghi nhận tổng cộng 23.385 ca mắc COVID-19. Gần 4 triệu liều vắc xin COVID-19 đã được tiêm tại Việt Nam.
 Thông tin diễn biến dịch COVID-19 ở Việt Nam:
 Tính từ 19h30 ngày 07/7 đến 6h ngày 08/7 có 314 ca mắc mới (BN23072-23385):
