@@ -17,8 +17,16 @@ public class User {
     @Column(name = "id")
     int id;
 
-    @OneToMany(mappedBy = "user")
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
     private List<Role> roleList;
+
+    @OneToMany(mappedBy = "user")
+    List<Post> postList;
 
     @Column(name = "first_name")
     String firstName;

@@ -20,8 +20,6 @@ public class Tag {
     @Column(name = "name")
     String name;
 
-//    @OneToMany(mappedBy = "tag")
-//    private List<Post_tag> postTagList;
     @ManyToMany(mappedBy = "tag")
     private List<Post> postList;
 }
