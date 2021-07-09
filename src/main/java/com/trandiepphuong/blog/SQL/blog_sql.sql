@@ -15,13 +15,19 @@ CREATE TABLE user
 );
 CREATE TABLE role
 (
-    id int NOT NULL AUTO_INCREMENT,
-    role VARCHAR(50),
-    user_id BIGINT NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT `fk_role_user` FOREIGN KEY (user_id) REFERENCES user(id)
+	id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(50),
+    PRIMARY KEY (id)
 );
-
+CREATE TABLE user_role
+(
+  user_id BIGINT NOT NULL,
+  role_id INT NOT NULL,
+  KEY `user_fk_idx` (user_id),
+  KEY `role_fk_idx` (role_id),
+  CONSTRAINT `role_fk` FOREIGN KEY (role_id) REFERENCES role(id),
+  CONSTRAINT `user_fk` FOREIGN KEY (user_id) REFERENCES user(id)
+);
 
 
 CREATE TABLE category
@@ -51,8 +57,8 @@ CREATE TABLE post
 CREATE TABLE tag
 (
     id BIGINT NOT NULL AUTO_INCREMENT,
-    name TEXT NULL DEFAULT NULL,
-    PRIMARY KEY (id)
+	name TEXT NULL DEFAULT NULL,
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE post_tag
@@ -64,14 +70,14 @@ CREATE TABLE post_tag
     CONSTRAINT `fk_pt_tag` FOREIGN KEY (tag_id) REFERENCES tag (id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
-insert into user ( first_name, last_name, mobile, email, password, intro) values
-('Phương','Trần','0354892727','phuongtran@novahub.vn','123456789','Intro của Phương'),
-('Triết','Trần','0382499311','triettran@novahub.vn','987654321','Intro của Triết'),
-('Admin', 'Admin', '0354892727','dphuong15032000@gmail.com','123456789','Intro của Admin');
-insert into role (role, user_id) values ('admin',3), ('author',1), ('author',2);
-
-insert into category (name) values ('Xã hội'),('Thể thao'),('Công nghệ');
-insert into post (author_id, category_id, title, created_at, updated_at, content) values
+insert into user (first_name, last_name, mobile, email, password, intro) values
+('Phương', 'Trần', '0354892727', 'phuongtran@novahub.vn', '123456789', 'Intro của Phương'),
+('Triết', 'Trần', '0382499311', 'triettran@novahub.vn', '987654321', 'Intro của Triết'),
+('Admin', 'Admin', '0354892727', 'dphuong15032000@gmail.com', '123456789', 'Intro của Admin');
+insert into role (name) values ('admin'), ('author');
+insert into user_role values (1, 2), (2, 2), (3, 1);
+insert into category (name) values ('Xã hội'), ('Thể thao'), ('Công nghệ');
+insert into post (author_id, category_id, title, created_at, updated_at, content) values 
 (1, 1, 'Sáng 8/7: TP Hồ Chí Minh và Bình Dương có 314 ca mắc COVID-19', '2021/07/08 05:58', '2021/07/08 05:58', 'Suckhoedoisong.vn - Bản tin dịch COVID-19 sáng 8/7 của Bộ Y tế cho biết có 314 ca mắc tại 2 địa phương là TP Hồ Chí Minh - 234 ca và Bình Dương- 80 ca. Đến nay, Việt Nam ghi nhận tổng cộng 23.385 ca mắc COVID-19. Gần 4 triệu liều vắc xin COVID-19 đã được tiêm tại Việt Nam.
 Thông tin diễn biến dịch COVID-19 ở Việt Nam:
 Tính từ 19h30 ngày 07/7 đến 6h ngày 08/7 có 314 ca mắc mới (BN23072-23385):
@@ -90,4 +96,4 @@ Công nghệ camera ẩn dưới màn hình được trang bị đầu tiên tr�
 (2, 3, 'Apple chặn hành vi đáng ngờ của TikTok trên iOS', '2021/07/08 11:45', '2021/07/08 11:45', 'ikTok muốn theo dõi người dùng iOS bằng công cụ mới có tên CAID nhưng đã bị Apple ngăn chặn. Vào tháng 5, Apple tung ra iOS 14.5, bản cập nhật giữa chu kỳ có quy mô “lớn bất thường”. Ngoài một số cải tiến Siri, hỗ trợ AirTags, phiên bản này chính thức áp dụng tính năng Minh bạch theo dõi người dùng (App Tracking Transparency) đã được công bố trước đó.');
 
 insert into tag (name) values ('Covid-19'), ('Hà Nội'), ('Xã hội'), ('TP.HCM'), ('EURO'), ('Anh'), ('Italia'), ('Đan Mạch'), ('Bóng đá'), ('Thể thao'), ('TNGT'), ('Iphone'), ('Samsung'), ('Công nghệ'), ('Trung Quốc');
-insert into post_tag () values (1, 1), (1, 3), (1, 4), (2, 2), (2, 3), (3, 3), (3, 11),(4, 5), (4, 6), (4,7),(4,9),(4,10),(5, 5), (5, 6), (5,8),(5,9),(5,10),(6,9),(6,10),(7,12),(7,13),(7,14),(8,14),(8,15),(9,12),(9,14),(9,15);
+insert into post_tag () values (1, 1), (1, 3), (1, 4), (2, 2), (2, 3), (3, 3), (3, 11), (4, 5), (4, 6), (4, 7), (4, 9), (4, 10), (5, 5), (5, 6), (5, 8), (5, 9), (5, 10), (6, 9), (6, 10), (7, 12), (7, 13), (7 ,14), (8, 14), (8, 15), (9, 12), (9, 14), (9, 15);
