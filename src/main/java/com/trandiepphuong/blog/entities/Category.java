@@ -1,12 +1,15 @@
 package com.trandiepphuong.blog.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
-
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,5 +24,6 @@ public class Category {
     String name;
 
     @OneToMany(mappedBy = "category")
+    @JsonIgnoreProperties("postList")
     private List<Post> postList;
 }

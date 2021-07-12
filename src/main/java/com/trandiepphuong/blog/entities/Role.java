@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
-
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,6 +20,6 @@ public class Role {
     @Column(name="name")
     String role;
 
-    @ManyToMany(mappedBy = "role")
+    @ManyToMany(mappedBy = "roleList")
     private List<User> userList;
 }
