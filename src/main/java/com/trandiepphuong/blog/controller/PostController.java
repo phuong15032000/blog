@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/blog")
+@RequestMapping("/api/posts")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PostController {
     @Autowired
@@ -27,9 +27,9 @@ public class PostController {
         return postService.findAll();
     }
 
-    @GetMapping("/{categoryName}") //%20
-    public List<Post> getSportPosts(@PathVariable String categoryName) {
-        return postService.findByCategory(categoryName);
+    @GetMapping("/{categoryId}") //%20
+    public List<Post> getSportPosts(@PathVariable int categoryId) {
+        return postService.findByCategory(categoryId);
     }
 
     @GetMapping("/post")

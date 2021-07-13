@@ -21,8 +21,8 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public List<Post> findByCategory(String category){
-        return postRepository.findByCategory(categoryRepository.findByNameContaining(category));
+    public List<Post> findByCategory(int categoryId){
+        return postRepository.findByCategory(categoryRepository.findById(categoryId));
     }
 
     public Optional<Post> findById(int id) {
