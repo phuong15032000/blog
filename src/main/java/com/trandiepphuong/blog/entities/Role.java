@@ -18,8 +18,12 @@ public class Role {
     int id;
 
     @Column(name="name")
-    String role;
+    String name;
 
     @ManyToMany(mappedBy = "roleList")
     private List<User> userList;
+
+    public Role(String name) {
+        this.name=name;
+    }
 }

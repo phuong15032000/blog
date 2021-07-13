@@ -1,11 +1,9 @@
-package com.trandiepphuong.blog.controller;
+package com.trandiepphuong.blog.controllers;
 
-import com.trandiepphuong.blog.entities.Category;
 import com.trandiepphuong.blog.entities.Post;
-import com.trandiepphuong.blog.entities.Tag;
 import com.trandiepphuong.blog.services.PostService;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,13 +25,13 @@ public class PostController {
         return postService.findAll();
     }
 
-    @GetMapping("/{categoryName}") //%20
+    @GetMapping("/category/{categoryName}") //%20
     public List<Post> getSportPosts(@PathVariable String categoryName) {
         return postService.findByCategory(categoryName);
     }
 
-    @GetMapping("/post")
-    public Optional<Post> getPostById(@RequestParam int id){
+    @GetMapping("/post/{id}")
+    public Optional<Post> getPostById(@PathVariable int id){
         return postService.findById(id);
     }
 }
