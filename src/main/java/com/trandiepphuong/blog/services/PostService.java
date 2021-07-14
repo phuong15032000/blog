@@ -17,15 +17,19 @@ public class PostService {
     @Autowired
     CategoryRepository categoryRepository;
 
-    public List<Post> findAll(){
+    public List<Post> findAll() {
         return postRepository.findAll();
     }
 
-    public List<Post> findByCategory(String category){
-        return postRepository.findByCategory(categoryRepository.findByNameContaining(category));
+    public List<Post> findByCategory(int categoryId) {
+        return postRepository.findByCategory(categoryRepository.findById(categoryId));
     }
 
     public Optional<Post> findById(int id) {
         return postRepository.findById(id);
+    }
+
+    public Post save(Post post) {
+        return postRepository.save(post);
     }
 }

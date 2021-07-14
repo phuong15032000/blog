@@ -4,14 +4,15 @@ import com.trandiepphuong.blog.entities.Post;
 import com.trandiepphuong.blog.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.config.web.servlet.headers.HeadersSecurityMarker;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/blog")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping("/api/posts")
+@CrossOrigin(origins = "*", allowedHeaders = "*", maxAge = 3600)
 public class PostController {
     @Autowired
     PostService postService;
@@ -25,13 +26,18 @@ public class PostController {
         return postService.findAll();
     }
 
-    @GetMapping("/category/{categoryName}") //%20
-    public List<Post> getSportPosts(@PathVariable String categoryName) {
-        return postService.findByCategory(categoryName);
+    @GetMapping("/{categoryId}")
+    public List<Post> getPostsByCategory(@PathVariable int categoryId) {
+        return postService.findByCategory(categoryId);
     }
 
-    @GetMapping("/post/{id}")
-    public Optional<Post> getPostById(@PathVariable int id){
+    @GetMapping("/post")
+    public Optional<Post> getPostById(@RequestParam int id){
         return postService.findById(id);
+    }
+
+    @PostMapping("/create")
+    public Post createPost(@RequestBody Post post){
+        return postService.save(post);
     }
 }
