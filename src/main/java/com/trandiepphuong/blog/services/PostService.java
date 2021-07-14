@@ -28,4 +28,8 @@ public class PostService {
     public Optional<Post> findById(int id) {
         return postRepository.findById(id);
     }
+
+    public Post save(Post post) {
+        return postRepository.save(post);
+    }
 }
