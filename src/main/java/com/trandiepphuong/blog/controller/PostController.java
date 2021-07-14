@@ -36,4 +36,9 @@ public class PostController {
     public Optional<Post> getPostById(@RequestParam int id){
         return postService.findById(id);
     }
+
+    @PostMapping("/create")
+    public Post createPost(@RequestBody Post post){
+        return postService.save(post);
+    }
 }
