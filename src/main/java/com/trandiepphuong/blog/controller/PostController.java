@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,17 +29,31 @@ public class PostController {
     }
 
     @GetMapping("/{categoryId}") //%20
-    public List<Post> getSportPosts(@PathVariable int categoryId) {
+    public List<Post> getPostByCategory(@PathVariable int categoryId) {
         return postService.findByCategory(categoryId);
     }
 
     @GetMapping("/post")
-    public Optional<Post> getPostById(@RequestParam int id){
+    public Optional<Post> getPostById(@RequestParam int id) {
         return postService.findById(id);
     }
 
-    @PostMapping("/create")
-    public Post createPost(@RequestBody Post post){
+    @PostMapping("")
+    public Post createPost(@RequestBody Post post) throws ParseException {
         return postService.save(post);
+    }
+
+    @GetMapping("/tag")
+    public List<Post> getPostByTag(@RequestParam String nameTag) {
+        return postService.findByTag(nameTag);
+    }
+
+    @DeleteMapping("/{id}")
+    public Post deletePost(@PathVariable int id) {
+        return postService.deletePost(id);
+    }
+    @PutMapping
+    public Post editPost(@RequestBody Post newPost) throws ParseException {
+        return postService.update(newPost.getId(),newPost);
     }
 }
