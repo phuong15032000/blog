@@ -1,7 +1,7 @@
-package com.trandiepphuong.blog.services;
+package com.phuongtd.blog.services;
 
-import com.trandiepphuong.blog.entities.Category;
-import com.trandiepphuong.blog.repositories.CategoryRepository;
+import com.phuongtd.blog.entities.Category;
+import com.phuongtd.blog.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

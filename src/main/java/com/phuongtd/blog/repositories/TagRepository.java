@@ -1,6 +1,6 @@
-package com.trandiepphuong.blog.repositories;
+package com.phuongtd.blog.repositories;
 
-import com.trandiepphuong.blog.entities.Tag;
+import com.phuongtd.blog.entities.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

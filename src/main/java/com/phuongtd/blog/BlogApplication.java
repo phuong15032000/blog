@@ -1,4 +1,4 @@
-package com.trandiepphuong.blog;
+package com.phuongtd.blog;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

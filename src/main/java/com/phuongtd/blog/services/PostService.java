@@ -1,18 +1,14 @@
-package com.trandiepphuong.blog.services;
+package com.phuongtd.blog.services;
 
-import com.trandiepphuong.blog.entities.Post;
-import com.trandiepphuong.blog.repositories.CategoryRepository;
-import com.trandiepphuong.blog.repositories.PostRepository;
-import com.trandiepphuong.blog.repositories.TagRepository;
+import com.phuongtd.blog.entities.Post;
+import com.phuongtd.blog.repositories.CategoryRepository;
+import com.phuongtd.blog.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;

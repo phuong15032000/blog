@@ -1,7 +1,7 @@
-package com.trandiepphuong.blog.services;
+package com.phuongtd.blog.services;
 
-import com.trandiepphuong.blog.entities.Tag;
-import com.trandiepphuong.blog.repositories.TagRepository;
+import com.phuongtd.blog.entities.Tag;
+import com.phuongtd.blog.repositories.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

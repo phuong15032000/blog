@@ -1,10 +1,8 @@
-package com.trandiepphuong.blog.controller;
+package com.phuongtd.blog.controller;
 
-import com.trandiepphuong.blog.entities.Tag;
-import com.trandiepphuong.blog.repositories.TagRepository;
-import com.trandiepphuong.blog.services.TagService;
+import com.phuongtd.blog.entities.Tag;
+import com.phuongtd.blog.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

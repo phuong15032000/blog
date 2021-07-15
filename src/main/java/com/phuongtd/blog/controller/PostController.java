@@ -1,10 +1,7 @@
-package com.trandiepphuong.blog.controller;
+package com.phuongtd.blog.controller;
 
-import com.trandiepphuong.blog.entities.Category;
-import com.trandiepphuong.blog.entities.Post;
-import com.trandiepphuong.blog.entities.Tag;
-import com.trandiepphuong.blog.services.PostService;
-import lombok.NoArgsConstructor;
+import com.phuongtd.blog.entities.Post;
+import com.phuongtd.blog.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

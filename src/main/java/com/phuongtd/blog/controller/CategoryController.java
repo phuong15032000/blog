@@ -1,9 +1,8 @@
-package com.trandiepphuong.blog.controller;
+package com.phuongtd.blog.controller;
 
-import com.trandiepphuong.blog.entities.Category;
-import com.trandiepphuong.blog.services.CategoryService;
+import com.phuongtd.blog.entities.Category;
+import com.phuongtd.blog.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

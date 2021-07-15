@@ -1,4 +1,4 @@
-package com.trandiepphuong.blog.entities;
+package com.phuongtd.blog.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
