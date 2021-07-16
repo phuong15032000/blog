@@ -36,11 +36,8 @@ public class AuthenticationController {
 
     @Autowired
     private RoleRepository roleRepository;
-    @GetMapping
-    public String hello(){
-        return "hello";
-    }
-    @PostMapping
+
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Login login) {
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(

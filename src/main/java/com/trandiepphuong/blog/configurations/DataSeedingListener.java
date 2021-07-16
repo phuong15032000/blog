@@ -49,8 +49,6 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             String jws = Jwts.builder()
                     .setSubject("Blog")
                     .signWith(SignatureAlgorithm.HS256, "BlogApi").compact();
-            System.out.println("Use this jwt key:");
-            System.out.println("jwt-key=" + jws);
         }
     }
 }

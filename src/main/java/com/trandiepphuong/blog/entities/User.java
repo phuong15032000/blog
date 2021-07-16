@@ -21,7 +21,7 @@ public class User {
     @Column(name = "id")
     int id;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @Fetch(value= FetchMode.SUBSELECT)
     @JoinTable(
             name = "user_role",
