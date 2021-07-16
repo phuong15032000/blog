@@ -52,7 +52,6 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user) {
-        System.out.println("register");
         if (userRepository.findByEmail(user.getEmail()) == null) {
             user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
             user.setRoleList(new ArrayList<>());
