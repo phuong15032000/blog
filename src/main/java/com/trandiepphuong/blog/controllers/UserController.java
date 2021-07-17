@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.trandiepphuong.blog.entities.User;
 import com.trandiepphuong.blog.repositories.UserRepository;
+import com.trandiepphuong.blog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,11 +14,11 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     @GetMapping
     @JsonIgnoreProperties("password")
     public User getUserByEmail(@RequestParam String email) {
-        return userRepository.findByEmail(email);
+        return userService.findByEmail(email);
     }
 }
