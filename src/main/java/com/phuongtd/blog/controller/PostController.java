@@ -2,6 +2,7 @@ package com.phuongtd.blog.controller;
 
 import com.phuongtd.blog.entities.Post;
 import com.phuongtd.blog.services.PostService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,11 +47,12 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
-    public Post deletePost(@PathVariable int id) {
+    public Post deletePost(@PathVariable int id) throws NotFoundException {
         return postService.deletePost(id);
     }
-    @PutMapping
-    public Post editPost(@RequestBody Post newPost) throws ParseException {
-        return postService.update(newPost.getId(),newPost);
+
+    @PutMapping("/edit")
+    public Post editPost(@RequestParam int id, @RequestBody Post newPost) throws ParseException, NotFoundException {
+        return postService.update(id, newPost);
     }
 }

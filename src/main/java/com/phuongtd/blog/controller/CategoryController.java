@@ -2,6 +2,7 @@ package com.phuongtd.blog.controller;
 
 import com.phuongtd.blog.entities.Category;
 import com.phuongtd.blog.services.CategoryService;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +25,8 @@ public class CategoryController {
         return categoryService.save(category);
     }
 
-    @PutMapping()
-    public Category editCategory(@RequestBody Category category) {
-        return categoryService.update(category.getId(), category);
+    @PutMapping("/edit")
+    public Category editCategory(@RequestParam int id, @RequestBody Category category) throws NotFoundException {
+        return categoryService.update(id, category);
     }
 }

@@ -2,6 +2,7 @@ package com.phuongtd.blog.services;
 
 import com.phuongtd.blog.entities.Category;
 import com.phuongtd.blog.repositories.CategoryRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +25,12 @@ public class CategoryService {
     public Category save(Category category) {
         return categoryRepository.save(category);
     }
-    public Category update(int id, Category newCategory) {
+    public Category update(int id, Category newCategory) throws NotFoundException {
         Optional<Category> presentCategory = categoryRepository.findById(id);
         if (presentCategory.isPresent()){
             presentCategory.get().setName(newCategory.getName());
             return categoryRepository.save(presentCategory.get());
         }
-        return null;
+        throw new NotFoundException("Not found exception");
     }
 }

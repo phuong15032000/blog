@@ -3,6 +3,7 @@ package com.phuongtd.blog.services;
 import com.phuongtd.blog.entities.Post;
 import com.phuongtd.blog.repositories.CategoryRepository;
 import com.phuongtd.blog.repositories.PostRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,16 +50,16 @@ public class PostService {
         return postRepository.findByTagList_Name(tagName);
     }
 
-    public Post deletePost(int id) {
+    public Post deletePost(int id) throws NotFoundException {
         try {
             Post post = postRepository.findById(id).get();
             postRepository.deleteById(id);
             return post;
         } catch (Exception e) {
-            return null;
+            throw new NotFoundException("Not found exception");
         }
     }
-    public Post update(int id, Post newPost) throws ParseException {
+    public Post update(int id, Post newPost) throws ParseException, NotFoundException {
         Optional<Post> oldPost = postRepository.findById(id);
         if (oldPost.isPresent()){
             oldPost.get().setTitle(newPost.getTitle());
@@ -69,6 +70,6 @@ public class PostService {
             oldPost.get().setImg_thump_url(newPost.getImg_thump_url());
             return oldPost.get();
         }
-        return null;
+        throw new NotFoundException("Not found exception");
     }
 }

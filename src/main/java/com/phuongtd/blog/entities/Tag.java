@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -20,6 +21,6 @@ public class Tag {
     @Column(name = "name")
     String name;
 
-    @ManyToMany(mappedBy = "tagList",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "tagList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Post> postList;
 }
