@@ -1,5 +1,6 @@
 package com.phuongtd.blog.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -21,7 +23,7 @@ public class User {
     int id;
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @Fetch(value= FetchMode.SUBSELECT)
+    @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -46,8 +48,11 @@ public class User {
     String email;
 
     @Column(name = "password")
+    @JsonIgnore
     String password;
 
     @Column(name = "intro")
     String intro;
+
+    String token;
 }

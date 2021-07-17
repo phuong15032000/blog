@@ -35,7 +35,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public ResponseEntity<?> login(Login login) {
+    public User login(Login login) {
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         login.getUsername(),
@@ -44,7 +44,9 @@ public class UserService {
         );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final String token = jwtTokenUtil.generateToken(authentication);
-        return ResponseEntity.ok(new AuthToken(token));
+        User user = userRepository.findByEmail(login.getUsername());
+        user.setToken(token);
+        return user;
     }
 
     public String register(User user) {
