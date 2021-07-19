@@ -48,7 +48,6 @@ public class User {
     String email;
 
     @Column(name = "password")
-    @JsonIgnore
     String password;
 
     @Column(name = "intro")

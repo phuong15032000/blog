@@ -51,6 +51,7 @@ public class UserService {
 
     public String register(User user) {
         if (this.findByEmail(user.getEmail()) == null) {
+            System.out.println("mat khau la: "+user.getPassword());
             user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
             user.setRoleList(new ArrayList<>());
             user.getRoleList().add(roleService.findByName("ROLE_MEMBER"));

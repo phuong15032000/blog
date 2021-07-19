@@ -55,4 +55,8 @@ public class PostController {
     public Post editPost(@RequestParam int id, @RequestBody Post newPost) throws ParseException, NotFoundException {
         return postService.update(id, newPost);
     }
+    @GetMapping("/userId")
+    public List<Post> listPostByUserId(@RequestParam int id){
+        return postService.findByUser(id);
+    }
 }

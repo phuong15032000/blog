@@ -3,6 +3,7 @@ package com.phuongtd.blog.services;
 import com.phuongtd.blog.entities.Post;
 import com.phuongtd.blog.repositories.CategoryRepository;
 import com.phuongtd.blog.repositories.PostRepository;
+import com.phuongtd.blog.repositories.UserRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,9 @@ public class PostService {
 
     @Autowired
     CategoryRepository categoryRepository;
+
+    @Autowired
+    UserRepository userRepository;
     public Date getCurrentTime() throws ParseException {
         SimpleDateFormat formatter1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String datetime = LocalDateTime.now().toString();
@@ -71,5 +75,9 @@ public class PostService {
             return oldPost.get();
         }
         throw new NotFoundException("Not found exception");
+    }
+
+    public List<Post> findByUser(int id) {
+        return postRepository.findByUser(userRepository.findById(id));
     }
 }
