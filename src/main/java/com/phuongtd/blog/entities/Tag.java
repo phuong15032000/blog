@@ -21,6 +21,6 @@ public class Tag {
     @Column(name = "name")
     String name;
 
-    @ManyToMany(mappedBy = "tagList",cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "tagList")
     private List<Post> postList;
 }

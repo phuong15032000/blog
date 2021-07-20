@@ -1,8 +1,10 @@
 package com.phuongtd.blog.services;
 
 import com.phuongtd.blog.entities.Post;
+import com.phuongtd.blog.entities.Tag;
 import com.phuongtd.blog.repositories.CategoryRepository;
 import com.phuongtd.blog.repositories.PostRepository;
+import com.phuongtd.blog.repositories.TagRepository;
 import com.phuongtd.blog.repositories.UserRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -25,18 +28,24 @@ public class PostService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    TagRepository tagRepository;
+
     public Date getCurrentTime() throws ParseException {
-        SimpleDateFormat formatter1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String datetime = LocalDateTime.now().toString();
-        String date = datetime.substring(0,10);
-        String time = datetime.substring(12,19);
-        return formatter1.parse(date+ " "+time);
+        String date = datetime.substring(0, 10);
+        String time = datetime.substring(12, 19);
+        return formatter1.parse(date + " " + time);
     }
-    public List<Post> findAll(){
+
+    public List<Post> findAll() {
         return postRepository.findAll();
     }
 
-    public List<Post> findByCategory(int categoryId){
+    public List<Post> findByCategory(int categoryId) {
+        List<Post> allPost = postRepository.findByCategory(categoryRepository.findById(categoryId));
         return postRepository.findByCategory(categoryRepository.findById(categoryId));
     }
 
@@ -47,10 +56,22 @@ public class PostService {
     public Post save(Post post) throws ParseException {
         post.setCreatedAt(getCurrentTime());
         post.set_active(false);
+        List<Tag> tagsRequest = post.getTagList();
+        List<Tag> tagsExist = new ArrayList<>();
+
+        for (Tag tag : tagsRequest) {
+            Tag tagTmp = tagRepository.findByName(tag.getName());
+            if (tagTmp != null) {
+                tagsExist.add(tagTmp);
+            } else {
+                tagsExist.add(tagRepository.save(tag));
+            }
+        }
+        post.setTagList(tagsExist);
         return postRepository.save(post);
     }
 
-    public List<Post> findByTag(String tagName){
+    public List<Post> findByTag(String tagName) {
         return postRepository.findByTagList_Name(tagName);
     }
 
@@ -63,9 +84,10 @@ public class PostService {
             throw new NotFoundException("Not found exception");
         }
     }
+
     public Post update(int id, Post newPost) throws ParseException, NotFoundException {
         Optional<Post> oldPost = postRepository.findById(id);
-        if (oldPost.isPresent()){
+        if (oldPost.isPresent()) {
             oldPost.get().setTitle(newPost.getTitle());
             oldPost.get().setContent(newPost.getContent());
             oldPost.get().setCategory(newPost.getCategory());

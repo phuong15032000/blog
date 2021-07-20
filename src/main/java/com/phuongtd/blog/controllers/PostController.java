@@ -26,7 +26,7 @@ public class PostController {
         return postService.findAll();
     }
 
-    @GetMapping("/{categoryId}") //%20
+    @GetMapping("/{categoryId}")
     public List<Post> getPostByCategory(@PathVariable int categoryId) {
         return postService.findByCategory(categoryId);
     }
@@ -36,7 +36,7 @@ public class PostController {
         return postService.findById(id);
     }
 
-    @PostMapping("")
+    @PostMapping()
     public Post createPost(@RequestBody Post post) throws ParseException {
         return postService.save(post);
     }
@@ -55,6 +55,7 @@ public class PostController {
     public Post editPost(@RequestParam int id, @RequestBody Post newPost) throws ParseException, NotFoundException {
         return postService.update(id, newPost);
     }
+
     @GetMapping("/userId")
     public List<Post> listPostByUserId(@RequestParam int id){
         return postService.findByUser(id);
