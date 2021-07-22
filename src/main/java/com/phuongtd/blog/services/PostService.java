@@ -47,7 +47,11 @@ public class PostService {
 
     public List<Post> findByCategory(int categoryId) {
         List<Post> allPost = postRepository.findByCategory(categoryRepository.findById(categoryId));
-        return postRepository.findByCategory(categoryRepository.findById(categoryId));
+        List<Post> activePost = new ArrayList<>();
+        for (Post post : allPost){
+            if (post.is_active()) activePost.add(post);
+        }
+        return activePost;
     }
 
     public Optional<Post> findById(int id) {
@@ -93,7 +97,6 @@ public class PostService {
             oldPost.get().setContent(newPost.getContent());
             oldPost.get().setCategory(newPost.getCategory());
             oldPost.get().setUpdatedAt(getCurrentTime());
-            //oldPost.get().setTagList(newPost.getTagList());
             oldPost.get().setImg_thump_url(newPost.getImg_thump_url());
             List<Tag> tagsRequest = newPost.getTagList();
             List<Tag> tagsExist = new ArrayList<>();
