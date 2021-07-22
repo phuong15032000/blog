@@ -51,8 +51,8 @@ public class PostController {
         return postService.deletePost(id);
     }
 
-    @PutMapping("/edit")
-    public Post editPost(@RequestParam int id, @RequestBody Post newPost) throws ParseException, NotFoundException {
+    @PutMapping("/edit/{id}")
+    public Post editPost(@PathVariable int id, @RequestBody Post newPost) throws ParseException, NotFoundException {
         return postService.update(id, newPost);
     }
 

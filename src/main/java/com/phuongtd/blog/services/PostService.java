@@ -36,7 +36,8 @@ public class PostService {
         SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String datetime = LocalDateTime.now().toString();
         String date = datetime.substring(0, 10);
-        String time = datetime.substring(12, 19);
+        String time = datetime.substring(11, 19);
+        System.out.println(date + " " + time);
         return formatter1.parse(date + " " + time);
     }
 
@@ -92,9 +93,21 @@ public class PostService {
             oldPost.get().setContent(newPost.getContent());
             oldPost.get().setCategory(newPost.getCategory());
             oldPost.get().setUpdatedAt(getCurrentTime());
-            oldPost.get().setTagList(newPost.getTagList());
+            //oldPost.get().setTagList(newPost.getTagList());
             oldPost.get().setImg_thump_url(newPost.getImg_thump_url());
-            return oldPost.get();
+            List<Tag> tagsRequest = newPost.getTagList();
+            List<Tag> tagsExist = new ArrayList<>();
+
+            for (Tag tag : tagsRequest) {
+                Tag tagTmp = tagRepository.findByName(tag.getName());
+                if (tagTmp != null) {
+                    tagsExist.add(tagTmp);
+                } else {
+                    tagsExist.add(tagRepository.save(tag));
+                }
+            }
+            oldPost.get().setTagList(tagsExist);
+            return postRepository.save(oldPost.get());
         }
         throw new NotFoundException("Not found exception");
     }

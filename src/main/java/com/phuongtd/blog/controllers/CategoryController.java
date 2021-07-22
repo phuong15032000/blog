@@ -25,8 +25,8 @@ public class CategoryController {
         return categoryService.save(category);
     }
 
-    @PutMapping("/edit")
-    public Category editCategory(@RequestParam int id, @RequestBody Category category) throws NotFoundException {
+    @PutMapping("/edit/{id}")
+    public Category editCategory(@PathVariable int id, @RequestBody Category category) throws NotFoundException {
         return categoryService.update(id, category);
     }
 }
