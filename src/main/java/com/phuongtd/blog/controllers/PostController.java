@@ -22,8 +22,8 @@ public class PostController {
     }
 
     @GetMapping()
-    public List<Post> getAll() {
-        return postService.findAll();
+    public List<Post> getActivedPost() {
+        return postService.getActivedPost();
     }
 
     @GetMapping("/{categoryId}")

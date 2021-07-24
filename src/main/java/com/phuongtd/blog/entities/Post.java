@@ -21,7 +21,7 @@ public class Post {
     int id;
 
     @Column(name="is_active")
-    boolean is_active;
+    boolean active;
 
     @ManyToOne
     @JoinColumn(name = "category_id")

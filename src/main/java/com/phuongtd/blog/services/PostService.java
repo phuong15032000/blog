@@ -42,14 +42,14 @@ public class PostService {
     }
 
     public List<Post> findAll() {
-        return postRepository.findAll();
+        return postRepository.findAllByOrderByCreatedAtDesc();
     }
 
     public List<Post> findByCategory(int categoryId) {
         List<Post> allPost = postRepository.findByCategory(categoryRepository.findById(categoryId));
         List<Post> activePost = new ArrayList<>();
         for (Post post : allPost){
-            if (post.is_active()) activePost.add(post);
+            if (post.isActive()) activePost.add(post);
         }
         return activePost;
     }
@@ -60,7 +60,7 @@ public class PostService {
 
     public Post save(Post post) throws ParseException {
         post.setCreatedAt(getCurrentTime());
-        post.set_active(false);
+        post.setActive(false);
         List<Tag> tagsRequest = post.getTagList();
         List<Tag> tagsExist = new ArrayList<>();
 
@@ -86,7 +86,7 @@ public class PostService {
             postRepository.deleteById(id);
             return post;
         } catch (Exception e) {
-            throw new NotFoundException("Not found exception");
+            throw new NotFoundException(e.toString());
         }
     }
 
@@ -117,5 +117,44 @@ public class PostService {
 
     public List<Post> findByUser(int id) {
         return postRepository.findByUser(userRepository.findById(id));
+    }
+
+    public List<Post> getActivedPost() {
+        List<Post> allPost = postRepository.findAll();
+        List<Post> unactivePost = new ArrayList<>();
+        for (Post post : allPost){
+            if (post.isActive()) unactivePost.add(post);
+        }
+        return unactivePost;
+    }
+
+    public Post activePost(int id, Post post) throws ParseException, NotFoundException {
+        Optional<Post> oldPost = postRepository.findById(id);
+        if (oldPost.isPresent()) {
+            oldPost.get().setTitle(post.getTitle());
+            oldPost.get().setContent(post.getContent());
+            oldPost.get().setCategory(post.getCategory());
+            oldPost.get().setCreatedAt(post.getCreatedAt());
+            oldPost.get().setImg_thump_url(post.getImg_thump_url());
+            oldPost.get().setTagList(post.getTagList());
+            oldPost.get().setActive(true);
+            return postRepository.save(oldPost.get());
+        }
+        throw new NotFoundException("Not found exception");
+    }
+
+    public Post inactivePost(int id, Post post) throws ParseException, NotFoundException {
+        Optional<Post> oldPost = postRepository.findById(id);
+        if (oldPost.isPresent()) {
+            oldPost.get().setTitle(post.getTitle());
+            oldPost.get().setContent(post.getContent());
+            oldPost.get().setCategory(post.getCategory());
+            oldPost.get().setCreatedAt(post.getCreatedAt());
+            oldPost.get().setImg_thump_url(post.getImg_thump_url());
+            oldPost.get().setTagList(post.getTagList());
+            oldPost.get().setActive(false);
+            return postRepository.save(oldPost.get());
+        }
+        throw new NotFoundException("Not found exception");
     }
 }
