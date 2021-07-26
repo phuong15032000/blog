@@ -33,7 +33,7 @@ public class DataSeedingListener implements ApplicationListener<ContextRefreshed
             user.setEmail(email);
             user.setPassword(new BCryptPasswordEncoder().encode(password));
             user.setRoleList(new ArrayList<>());
-
+            user.setActive(true);
             for (String role: roles) {
                 user.getRoleList().add(roleRepository.findByName(role));
             }

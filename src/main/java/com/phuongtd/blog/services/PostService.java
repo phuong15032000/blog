@@ -13,10 +13,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PostService {
@@ -44,13 +41,17 @@ public class PostService {
     public List<Post> findAll() {
         return postRepository.findAllByOrderByCreatedAtDesc();
     }
-
     public List<Post> findByCategory(int categoryId) {
         List<Post> allPost = postRepository.findByCategory(categoryRepository.findById(categoryId));
         List<Post> activePost = new ArrayList<>();
         for (Post post : allPost){
             if (post.isActive()) activePost.add(post);
         }
+        Collections.sort(activePost, new Comparator<Post>() {
+            public int compare(Post p1, Post p2) {
+                return Long.valueOf(p2.getCreatedAt().getTime()).compareTo(p1.getCreatedAt().getTime());
+            }
+        });
         return activePost;
     }
 
@@ -120,12 +121,12 @@ public class PostService {
     }
 
     public List<Post> getActivedPost() {
-        List<Post> allPost = postRepository.findAll();
-        List<Post> unactivePost = new ArrayList<>();
+        List<Post> allPost = postRepository.findAllByOrderByCreatedAtDesc();
+        List<Post> activerPost = new ArrayList<>();
         for (Post post : allPost){
-            if (post.isActive()) unactivePost.add(post);
+            if (post.isActive()) activerPost.add(post);
         }
-        return unactivePost;
+        return activerPost;
     }
 
     public Post activePost(int id, Post post) throws ParseException, NotFoundException {

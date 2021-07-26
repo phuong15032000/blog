@@ -25,12 +25,23 @@ public class CategoryService {
     public Category save(Category category) {
         return categoryRepository.save(category);
     }
+
     public Category update(int id, Category newCategory) throws NotFoundException {
         Optional<Category> presentCategory = categoryRepository.findById(id);
-        if (presentCategory.isPresent()){
+        if (presentCategory.isPresent()) {
             presentCategory.get().setName(newCategory.getName());
             return categoryRepository.save(presentCategory.get());
         }
         throw new NotFoundException("Not found exception");
+    }
+
+    public Category deleteById(int id) throws NotFoundException {
+        try {
+            Category category = categoryRepository.findById(id).get();
+            categoryRepository.deleteById(id);
+            return category;
+        } catch (Exception e) {
+            throw new NotFoundException(e.toString());
+        }
     }
 }
