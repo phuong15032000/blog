@@ -88,4 +88,12 @@ public class AdminController {
     public User activeUser(@PathVariable int id) throws NotFoundException {
         return userService.active(id);
     }
+    @GetMapping("/users/{id}")
+    public User getUserById(@PathVariable int id) throws NotFoundException {
+        return userService.findById(id);
+    }
+    @PutMapping("/users/{id}")
+    public User updateUser(@RequestBody User user, @PathVariable int id) throws Exception {
+        return userService.update(id,user);
+    }
 }

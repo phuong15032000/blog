@@ -61,7 +61,7 @@ public class UserService {
 
     public String register(User user) {
         if (this.findByEmail(user.getEmail()) == null) {
-            System.out.println("pass: "+user.getPassword());
+            System.out.println("pass: " + user.getPassword());
             user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
             user.setRoleList(new ArrayList<>());
             user.getRoleList().add(roleService.findByName("ROLE_MEMBER"));
@@ -124,6 +124,27 @@ public class UserService {
             user.get().setActive(true);
             userRepository.save(user.get());
             return user.get();
+        }
+        throw new NotFoundException("Not found exception");
+    }
+
+    public User findById(int id) throws NotFoundException {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            return user.get();
+        }
+        throw new NotFoundException("Not found exception");
+    }
+
+    public User update(int id, User user) throws NotFoundException {
+        Optional<User> currentUser = userRepository.findById(id);
+        if (currentUser.isPresent()) {
+            System.out.println(user.getFirstName());
+            currentUser.get().setFirstName(user.getFirstName());
+            currentUser.get().setLastName(user.getLastName());
+            currentUser.get().setMobile(user.getMobile());
+            currentUser.get().setIntro(user.getIntro());
+            return userRepository.save(currentUser.get());
         }
         throw new NotFoundException("Not found exception");
     }
