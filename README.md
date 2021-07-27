@@ -13,7 +13,7 @@ Codecov: [![codecov](https://codecov.io/gh/phuong15032000/phuongtran-blog/branch
     <li>Step 6: Command:
         <ul>
             <li><code>Gradlew build</code></li>
-            <li><code>Gradlew runBoot</code></li>
+            <li><code>Gradlew bootRun</code></li>
         </ul>
     </li>
 </ul>
